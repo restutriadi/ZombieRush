@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class movechar : MonoBehaviour {
 
     public bool onGround;
     public Rigidbody rb;
+    public Text Score;
 
     public KeyCode moveL;
     public KeyCode moveR;
@@ -24,6 +26,9 @@ public class movechar : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+        Score.text = "Score: " + GM.coinTotal.ToString();
+
 		GetComponent<Rigidbody>().velocity = new Vector3 (horizVel,0,4);
 
 		if ((Input.GetKeyDown(moveL)) && (laneNum>1) && (controlLocked == "n")){
@@ -51,7 +56,7 @@ public class movechar : MonoBehaviour {
             Destroy(gameObject);
             GM.zVelAdj = 0;
         }
-        if(other.gameObject.name == "Capsule"){
+        if(other.gameObject.name == "Capsule(Clone)"){
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "ground"){
@@ -63,7 +68,7 @@ public class movechar : MonoBehaviour {
         if(other.gameObject.name == "Gate"){
             SceneManager.LoadScene("LvlComplete");
         }
-        if(other.gameObject.name == "Coin"){
+        if(other.gameObject.name == "Coin(Clone)"){
             Destroy(other.gameObject);
             GM.coinTotal += 1;
         }

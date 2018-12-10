@@ -11,10 +11,10 @@ public class powerUp : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if(gameObject.name == "Capsule"){
+        if(gameObject.name == "Capsule(Clone)"){
             transform.Rotate (4,0,0);
         }
-		if(gameObject.name == "Coin"){
+		if(gameObject.name == "Coin(Clone)"){
             transform.Rotate (0,0,4);
         }
 	}
