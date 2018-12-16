@@ -7,6 +7,7 @@ public class GM : MonoBehaviour {
     public static int coinTotal = 0;
 
     public static float zVelAdj = 1;
+    public static float difficulty = 0;
 
     public Transform area;
     public float zScenePos = 12;
@@ -24,10 +25,7 @@ public class GM : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if(zScenePos < 100){
-
-            Instantiate(area, new Vector3(0, 0, zScenePos), area.rotation);
-            zScenePos += 4;
+        if(true){
 
             randNum = Random.Range(0, 12);
 
