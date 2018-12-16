@@ -16,7 +16,7 @@ public class movechar : MonoBehaviour {
     public float horizVel = 0;
     public int laneNum = 2;
     public string controlLocked = "n";
-
+    public float horspd;
 	// Use this for initialization
 	void Start () {
         onGround = true;
@@ -28,7 +28,8 @@ public class movechar : MonoBehaviour {
 	void Update () {
 
         Score.text = "Score: " + GM.coinTotal.ToString();
-
+        horizVel = Input.GetAxis("Horizontal") * horspd;
+        // Debug.log(horizVel);
 		GetComponent<Rigidbody>().velocity = new Vector3 (horizVel,0,4);
 
 		if ((Input.GetKeyDown(moveL)) && (laneNum>1) && (controlLocked == "n")){
