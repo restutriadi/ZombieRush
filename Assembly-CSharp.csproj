@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\BulletScript.cs" />
+     <Compile Include="Assets\Script\DeathMenu.cs" />
      <Compile Include="Assets\Script\GM.cs" />
      <Compile Include="Assets\Script\movecam.cs" />
      <Compile Include="Assets\Script\movechar.cs" />

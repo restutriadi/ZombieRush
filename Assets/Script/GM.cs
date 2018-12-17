@@ -5,6 +5,7 @@ using UnityEngine;
 public class GM : MonoBehaviour {
 
     public static int coinTotal = 0;
+    public static int poinTotal = 0;
 
     public static float zVelAdj = 1;
     public static float difficulty = 0;

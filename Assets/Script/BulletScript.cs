@@ -11,6 +11,31 @@ public class BulletScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+			
 	}
+
+     void OnCollisionExit(Collision other){
+
+
+     }
+
+
+    void OnTriggerEnter(Collider other){
+        
+        if(other.gameObject.tag == "lethal"){
+        	Destroy(other.gameObject);
+        	Debug.Log("kena");
+			GM.poinTotal += 1;
+        }
+        
+        // if(other.gameObject.name == "Capsule(Clone)"){
+
+        // }        
+
+        // if(other.gameObject.name == "Coin(Clone)"){
+            // GM.coinTotal += 1;
+            // if(GM.coinTotal % 5 == 0) IncreaseLevel();
+        // }
+
+    }
 }

@@ -32,14 +32,13 @@ public class movechar : MonoBehaviour {
     public Transform bulletSpawn;
     public static float forwardVel;
     public static bool DeathStatus;
-
+    public DeathMenu deathmenu;
 	// Use this for initialization
 	void Start () {
         DeathStatus = false;
         forwardVel = 4;
         onGround = true;
         rb = GetComponent<Rigidbody>();
-
         anim = CharacterGO.GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
 
@@ -49,11 +48,12 @@ public class movechar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(DeathStatus == true) {
-            SceneManager.LoadScene("LvlComplete");
-            Debug.Log("bisa");
+            deathmenu.ToggleEndMenu();
+            // SceneManager.LoadScene("LvlComplete");
+            // Debug.Log("bisa");
             return;
         };
-        Debug.Log(controller.isGrounded);
+        // Debug.Log(controller.isGrounded);
         if(controller.isGrounded){
             // verVel = -0.5f;
         }   
@@ -62,7 +62,7 @@ public class movechar : MonoBehaviour {
         }
 
         moveVector.x = Input.GetAxis("Horizontal");
-        moveVector.z = speed;
+        moveVector.z = speed + GM.difficulty;
         moveVector.y = verVel;
                 
         // Physics.gravity = new Vector3(0, -1.0F, 0);
@@ -75,9 +75,10 @@ public class movechar : MonoBehaviour {
             // transform.position = temp;
             // newProjectile = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
             // newProjectile.GetComponent<Rigidbody>().velocity = ;
-
             Fire();
         };
+
+        // Debug.Log(transform.position.x);
         
 	}
     void IncreaseLevel(){
@@ -91,19 +92,20 @@ public class movechar : MonoBehaviour {
 
     // Create the Bullet from the Bullet Prefab
             temp.x = transform.position.x;
-            temp.y = transform.position.y;
+            temp.y = transform.position.y + 1;
             temp.z = transform.position.z + 4;
 
-    var bullet = 
-        (GameObject)Instantiate (
-        bulletPrefab,
-        bulletSpawn.position,   
-        bulletSpawn.rotation);
-        // newProjectile = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
-        // newProjectile.GetComponent<Rigidbody>().velocity = -bullet.transform.forward * 12;
+    // var bullet = 
+    //     (GameObject)Instantiate (
+    //     bulletPrefab,
+    //     temp,   
+    //     bulletSpawn.rotation);
+        newProjectile = Instantiate(bulletPrefab, temp, transform.rotation) as GameObject;
+        // bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        // bullet.GetComponent<Rigidbody>().velocity = new Vector3(speed * Time.deltaTime * 100, 0, 0);
+        newProjectile.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 7);
 
-        Destroy(bullet, 2.0f);
+        Destroy(newProjectile, 2.0f);
     }
 
 
@@ -132,6 +134,7 @@ public class movechar : MonoBehaviour {
             GM.coinTotal += 1;
             if(GM.coinTotal % 5 == 0) IncreaseLevel();
         }
+
     }
 
 	IEnumerator stopSlide(){
