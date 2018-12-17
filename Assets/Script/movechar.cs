@@ -26,13 +26,16 @@ public class movechar : MonoBehaviour {
     public float horspd;
     public float gravity = 12;
     private Vector3 moveVector = Vector3.zero;
-
+    private GameObject newProjectile;
 
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public static float forwardVel;
+    public static bool DeathStatus;
+
 	// Use this for initialization
 	void Start () {
+        DeathStatus = false;
         forwardVel = 4;
         onGround = true;
         rb = GetComponent<Rigidbody>();
@@ -45,6 +48,11 @@ public class movechar : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        if(DeathStatus == true) {
+            SceneManager.LoadScene("LvlComplete");
+            Debug.Log("bisa");
+            return;
+        };
         Debug.Log(controller.isGrounded);
         if(controller.isGrounded){
             // verVel = -0.5f;
@@ -60,7 +68,16 @@ public class movechar : MonoBehaviour {
         // Physics.gravity = new Vector3(0, -1.0F, 0);
         controller.Move(moveVector * Time.deltaTime);
         Score.text = "Score: " + GM.coinTotal.ToString();
+        if(Input.GetKeyDown(KeyCode.Space)){
+            // temp.x = transform.position.x;
+            // temp.y = transform.position.y;
+            // temp.z = transform.position.z + 4;
+            // transform.position = temp;
+            // newProjectile = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
+            // newProjectile.GetComponent<Rigidbody>().velocity = ;
 
+            Fire();
+        };
         
 	}
     void IncreaseLevel(){
@@ -70,45 +87,46 @@ public class movechar : MonoBehaviour {
     void Fire()
     {
 
-    
+    Vector3 temp = new Vector3();
+
     // Create the Bullet from the Bullet Prefab
-    var bullet = (GameObject)Instantiate (
+            temp.x = transform.position.x;
+            temp.y = transform.position.y;
+            temp.z = transform.position.z + 4;
+
+    var bullet = 
+        (GameObject)Instantiate (
         bulletPrefab,
         bulletSpawn.position,   
         bulletSpawn.rotation);
+        // newProjectile = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+        // newProjectile.GetComponent<Rigidbody>().velocity = -bullet.transform.forward * 12;
 
-    // bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
-    bullet.GetComponent<Rigidbody>().velocity = new Vector3 (horizVel , 0, 10 + GM.difficulty);
-
-    Destroy(bullet, 2.0f);
+        Destroy(bullet, 2.0f);
     }
 
-	void OnCollisionEnter(Collision other){
-        if(other.gameObject.tag == "lethal"){
-            Destroy(gameObject);
-            Debug.Log("Dead");
-            GM.zVelAdj = 0;
-        }
-        if(other.gameObject.name == "Capsule(Clone)"){
-            Destroy(other.gameObject);
-        }
-        if(other.gameObject.tag == "ground"){
-            onGround = true;
-            
-        }
-        
-	}
+
      void OnCollisionExit(Collision other){
-     if(other.gameObject.tag == "ground")
-        {
-         onGround = false;
-        }
+
+
      }
 
     void OnTriggerEnter(Collider other){
-        // if(other.gameObject.name == "Gate"){
-        //     SceneManager.LoadScene("LvlComplete");
-        // }
+        
+        if(other.gameObject.tag == "lethal"){
+            // Destroy(gameObject);
+            // Debug.Log("Dead");
+            GM.zVelAdj = 0;
+            Death();
+        }
+        
+        if(other.gameObject.name == "Capsule(Clone)"){
+            Destroy(other.gameObject);
+
+        }        
+
+
         if(other.gameObject.name == "Coin(Clone)"){
             Destroy(other.gameObject);
             GM.coinTotal += 1;
@@ -121,4 +139,8 @@ public class movechar : MonoBehaviour {
         horizVel = 0;
         controlLocked = "n";
 	}
+
+    void Death(){
+        DeathStatus = true;
+    }
 }

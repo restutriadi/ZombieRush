@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,12 +23,14 @@ public class GM : MonoBehaviour {
         
 	}
 
+
+
 	// Update is called once per frame
 	void Update () {
         if(true){
 
             randNum = Random.Range(0, 12);
-
+            zScenePos += 4;
             if(randNum<=2){
                 Instantiate(coinObj, new Vector3(-1, 1, zScenePos), coinObj.rotation);
             }
@@ -39,6 +41,7 @@ public class GM : MonoBehaviour {
 
             if(randNum>5 && randNum<=8){
                 Instantiate(coinObj, new Vector3(1, 1, zScenePos), coinObj.rotation);
+
             }
 
             if(randNum==9){

@@ -22,7 +22,6 @@ public class movecam : MonoBehaviour {
 			camera.x = transform.position.x;
 			camera.y = transform.position.y;
 			camera.z = lookAt.position.z + startOffset.z;
-			Debug.Log(camera.z);
 			transform.position = camera;
 		}
 
