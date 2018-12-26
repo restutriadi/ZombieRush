@@ -50,7 +50,7 @@ public class movechar : MonoBehaviour {
         if(DeathStatus == true) {
             deathmenu.ToggleEndMenu();
             // SceneManager.LoadScene("LvlComplete");
-            // Debug.Log("bisa");
+            Debug.Log("bisa");
             return;
         };
         // Debug.Log(controller.isGrounded);
@@ -144,6 +144,6 @@ public class movechar : MonoBehaviour {
 	}
 
     void Death(){
-        DeathStatus = true;
+        // DeathStatus = true;
     }
 }
